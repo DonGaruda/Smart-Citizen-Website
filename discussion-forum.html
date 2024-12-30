@@ -1,0 +1,290 @@
+<div class="community-section" id="community_section">
+    
+    <div class="community-header">
+        <h2>Community Discussion Forum</h2>
+        <p>Join the conversation! Start a forum, connect with others, and share your ideas.</p>
+    </div>
+
+    <!-- Create a New Forum Section -->
+    <div class="create-forum">
+        <h3>Create a New Forum</h3>
+        <form id="create-forum-form">
+            <input type="text" id="forum-title" placeholder="Forum Title" required />
+            <textarea id="forum-description" placeholder="Describe your forum..." required></textarea>
+            <button type="submit">Create Forum</button>
+        </form>
+    </div>
+
+    <!-- Display Active Forums Section -->
+    <div class="active-forums">
+        <h3>Active Forums</h3>
+        <ul id="forums-list">
+            <li>
+                <div class="forum-details">
+                    <h4><a href="#">Web Development Best Practices</a></h4>
+                    <p>Created by Sarah | 4 Participants</p>
+                </div>
+                <button class="join-forum-btn" data-forum="Web Development Best Practices">Join Forum</button>
+            </li>
+            <li>
+                <div class="forum-details">
+                    <h4><a href="#">Introduction to AI</a></h4>
+                    <p>Created by Mike | 6 Participants</p>
+                </div>
+                <button class="join-forum-btn" data-forum="Introduction to AI">Join Forum</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+<style>
+    /* General Community Section Styles */
+    .community-section {
+        background-color: black;
+        padding: 50px;
+        width: 100%;
+        margin: 0 auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .community-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .community-header h2 {
+        font-size: 2.2rem;
+        color: #2d3e50;
+    }
+
+    .community-header p {
+        font-size: 1.1rem;
+        color: #7a8d9c;
+    }
+
+    /* Create Forum Form */
+    .create-forum {
+        background-color: black;
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 40px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .create-forum h3 {
+        font-size: 1.8rem;
+        color: #3498db;
+        margin-bottom: 20px;
+    }
+
+    .create-forum form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .create-forum input,
+    .create-forum textarea {
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 2px solid #dcdde1;
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+
+    .create-forum button {
+        padding: 12px 20px;
+        background-color: #2980b9;
+        color: #fff;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .create-forum button:hover {
+        background-color: #1a5d82;
+    }
+
+    /* Active Forums Section */
+    .active-forums {
+        background-color: black;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .active-forums h3 {
+        font-size: 1.8rem;
+        color: #2d3e50;
+        margin-bottom: 20px;
+    }
+
+    .active-forums ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .active-forums li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #e5e8eb;
+    }
+
+    .active-forums li:last-child {
+        border-bottom: none;
+    }
+
+    .active-forums .forum-details h4 {
+        font-size: 1.2rem;
+        color: #3498db;
+    }
+
+    .active-forums .forum-details p {
+        font-size: 0.9rem;
+        color: #7a8d9c;
+    }
+
+    .join-forum-btn {
+        background-color: #1abc9c;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .join-forum-btn:hover {
+        background-color: #16a085;
+    }
+
+    /* Chat Section */
+    .chat-section {
+        display: none;
+        background-color: black;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+        max-height: 400px;
+        z-index: 100;
+    }
+
+    .chat-header {
+        background-color: #3498db;
+        color: white;
+        padding: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .chat-header h4 {
+        font-size: 1rem;
+    }
+
+    .chat-header .close-chat {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .chat-messages {
+        padding: 15px;
+        height: 200px;
+        overflow-y: auto;
+        border-bottom: 1px solid #e5e8eb;
+    }
+
+    .chat-messages .message {
+        margin-bottom: 15px;
+    }
+
+    .chat-messages strong {
+        color: #2c3e50;
+    }
+
+    .chat-input {
+        display: flex;
+        padding: 10px;
+    }
+
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #dcdde1;
+        border-radius: 8px;
+    }
+
+    .chat-input button {
+        padding: 10px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+</style>
+
+
+
+
+
+
+<script>
+      document.addEventListener("DOMContentLoaded", () => {
+    // Handle forum creation form
+    const createForumForm = document.getElementById("create-forum-form");
+    const forumsList = document.getElementById("forums-list");
+
+    createForumForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const title = document.getElementById("forum-title").value;
+      const description = document.getElementById("forum-description").value;
+
+      const newForum = document.createElement("li");
+      newForum.innerHTML = `
+        <div class="forum-details">
+          <h4><a href="#">${title}</a></h4>
+          <p>Created by You | 1 Participant</p>
+        </div>
+        <button class="join-forum-btn" data-forum="${title}">Join Forum</button>
+      `;
+      forumsList.appendChild(newForum);
+
+      // Reset form
+      createForumForm.reset();
+
+      // Add event listener for the new forum's join button
+      newForum.querySelector(".join-forum-btn").addEventListener("click", function() {
+        const forumName = this.getAttribute("data-forum");
+        window.location.href = `chat.html?forum=${forumName}`;
+      });
+    });
+
+    // Handle existing join buttons
+    document.querySelectorAll(".join-forum-btn").forEach(button => {
+      button.addEventListener("click", function() {
+        const forumName = this.getAttribute("data-forum");
+        window.location.href = `chat.html?forum=${forumName}`;
+      });
+    });
+  });
+
+
+
+
+</script>

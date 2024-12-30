@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Page</title>
+  <style>
+    /* Chat Page Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f9fc;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: #3498db;
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .chat-messages {
+      height: 300px;
+      overflow-y: auto;
+      padding: 15px;
+      border-bottom: 1px solid #e5e8eb;
+    }
+
+    .chat-message {
+      margin-bottom: 15px;
+    }
+
+    .chat-message strong {
+      color: #2c3e50;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #dcdde1;
+      border-radius: 8px;
+    }
+
+    .chat-input button {
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <h4 id="forum-title">Forum Name</h4>
+      <button class="leave-chat" id="leave-forum-btn">Leave Forum</button>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-message">
+        <strong>Sarah:</strong> Welcome to the forum!
+      </div>
+      <div class="chat-message">
+        <strong>Mike:</strong> Hi Sarah, thanks for creating this space!
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" placeholder="Type your message..." id="message-input" />
+      <button id="send-message-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const leaveForumButton = document.getElementById("leave-forum-btn");
+
+    // Add event listener for the Leave Forum button
+    leaveForumButton.addEventListener("click", () => {
+      // Redirect to the discussion forum section (assumed to be in the same page or different page)
+      window.location.href = "index.html"; // Replace with actual URL to your discussion forum section
+    });
+  });
+
+  
+
+
+
+    // Extract forum name from URL and display it
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const forumName = urlParams.get('forum');
+      document.getElementById("forum-title").innerText = forumName;
+
+      // Mock chat functionality
+      const sendMessageBtn = document.getElementById("send-message-btn");
+      const messageInput = document.getElementById("message-input");
+      const chatMessages = document.getElementById("chat-messages");
+
+      sendMessageBtn.addEventListener("click", () => {
+        const message = messageInput.value;
+        if (message.trim()) {
+          const newMessage = document.createElement("div");
+          newMessage.classList.add("chat-message");
+          newMessage.innerHTML = `<strong>You:</strong> ${message}`;
+          chatMessages.appendChild(newMessage);
+          messageInput.value = "";
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

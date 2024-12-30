@@ -1,0 +1,272 @@
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url(Image/blood.jpeg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px;
+        }
+
+        h1, h2 {
+            color: #020202;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Form styling */
+        .form-section, .donor-form-section {
+            background: #fff;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.8s ease-in-out;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #e74c3c;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Blood request list */
+        .request-list ul {
+            list-style: none;
+        }
+
+        .request-list li {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .request-list li:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #e74c3c;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Blood Donation & Needed Section</h1>
+
+    <!-- Blood Request Form -->
+    <div class="form-section">
+        <h2>Request Blood</h2>
+        <form id="blood-request-form">
+            <label for="blood-group">Blood Group</label>
+            <select id="blood-group" required>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+
+            <label for="location">Location</label>
+            <input type="text" id="location" placeholder="Enter location" required>
+
+            <label for="contact">Contact Number</label>
+            <input type="text" id="contact" placeholder="Enter contact number" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+
+    <!-- Blood Request List -->
+    <div class="request-list">
+        <h2>Available Blood Requests</h2>
+        <ul id="request-list"></ul>
+    </div>
+
+    <!-- Blood Donor Modal -->
+    <div id="donor-modal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <h2>Donate Blood</h2>
+        <form id="donor-form">
+            <input type="hidden" id="request-email">
+            <label for="donor-name">Your Name</label>
+            <input type="text" id="donor-name" required>
+
+            <label for="donor-mobile">Mobile Number</label>
+            <input type="text" id="donor-mobile" required>
+
+            <label for="donor-age">Age</label>
+            <input type="number" id="donor-age" required>
+
+            <label for="donor-gender">Gender</label>
+            <select id="donor-gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <label for="donor-location">Your Location</label>
+            <input type="text" id="donor-location" required>
+
+            <button type="submit">Donate Now</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    // Sample Data Storage
+    const requestList = document.getElementById('request-list');
+    const bloodRequestForm = document.getElementById('blood-request-form');
+    const donorForm = document.getElementById('donor-form');
+    const donorModal = document.getElementById('donor-modal');
+    const requestEmailInput = document.getElementById('request-email');
+
+    // Submit blood request form
+    bloodRequestForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const bloodGroup = document.getElementById('blood-group').value;
+        const location = document.getElementById('location').value;
+        const contact = document.getElementById('contact').value;
+        const email = document.getElementById('email').value;
+
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <strong>Blood Group:</strong> ${bloodGroup}<br>
+            <strong>Location:</strong> ${location}<br>
+            <strong>Contact:</strong> ${contact}<br>
+            <button class="donate-btn" onclick="openDonorModal('${email}')">Donate Blood</button>
+        `;
+
+        requestList.appendChild(listItem);
+        bloodRequestForm.reset();
+    });
+
+    // Open Donor Modal
+    function openDonorModal(requesterEmail) {
+        donorModal.classList.add('show');
+        requestEmailInput.value = requesterEmail;
+    }
+
+    // Close Modal
+    function closeModal() {
+        donorModal.classList.remove('show');
+    }
+
+    // Submit donor form
+    donorForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const donorName = document.getElementById('donor-name').value;
+        const donorMobile = document.getElementById('donor-mobile').value;
+        const donorAge = document.getElementById('donor-age').value;
+        const donorGender = document.getElementById('donor-gender').value;
+        const donorLocation = document.getElementById('donor-location').value;
+        const requesterEmail = requestEmailInput.value;
+
+        // In a real-world scenario, here you would send an email or notification to the requester
+        alert(Email sent to ${requesterEmail} with donor details.);
+        donorForm.reset();
+        closeModal();
+    });
+</script>
+
+</body>
+</html>

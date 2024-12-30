@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agriculture Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #fff;
+        }
+
+        #chat-container {
+            width: 90%;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        #chat {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .user {
+            justify-content: flex-end;
+        }
+
+        .message p {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            background: #f1f1f1;
+        }
+
+        .user p {
+            background: #a8e063;
+            color: #fff;
+        }
+
+        #input-container {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #input-container input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        #input-container button {
+            background: #56ab2f;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        #input-container button:hover {
+            background: #469127;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Agriculture Chatbot</h1>
+    </header>
+
+    <div id="chat-container">
+        <div id="chat">
+            <!-- Messages will be displayed here -->
+        </div>
+        <div id="input-container">
+            <input type="text" id="user-input" placeholder="Ask about plant diseases...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chat = document.getElementById('chat');
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            // Display user's message
+            displayMessage(message, 'user');
+
+            // Simulate chatbot response
+            setTimeout(() => {
+                const botResponse = getBotResponse(message);
+                displayMessage(botResponse, 'bot');
+            }, 500);
+
+            userInput.value = '';
+        }
+
+        function displayMessage(text, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.innerHTML = `<p>${text}</p>`;
+            chat.appendChild(messageElement);
+
+            // Scroll to the bottom
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function getBotResponse(message) {
+            // Sample responses - Extend with real logic
+            const responses = {
+                'what is leaf spot?': 'Leaf spot is a fungal disease that causes dark spots on leaves. Consider using fungicides.',
+                'how to treat powdery mildew?': 'Powdery mildew can be treated by applying sulfur-based fungicides.',
+                'suggest fertilizer for tomatoes': 'For tomatoes, use a balanced fertilizer like 10-10-10 or 5-10-10.',
+            };
+
+            return responses[message.toLowerCase()] || "I'm sorry, I don't have an answer for that. Please consult an expert.";
+        }
+    </script>
+</body>
+</html>

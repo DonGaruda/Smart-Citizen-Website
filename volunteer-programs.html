@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Volunteer Program</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-image: url(Image/1.jpeg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .volunteer-programs-section {
+            padding: 40px;
+            background-color: rgba(16, 16, 16, 0.8);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        .new-program-form,
+        .join-form-modal {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.982);
+            box-shadow: 0 4px 30px rgb(250, 250, 250);
+            transition: transform 0.3s ease;
+        }
+
+        .new-program-form:hover,
+        .join-form-modal:hover {
+            transform: translateY(-5px);
+        }
+
+        .new-program-form input,
+        .new-program-form textarea,
+        .join-form-content input,
+        .join-form-content textarea,
+        .join-form-content select {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(252, 244, 244);
+            transition: background-color 0.3s ease, border 0.3s ease;
+        }
+
+        .new-program-form input:focus,
+        .new-program-form textarea:focus,
+        .join-form-content input:focus,
+        .join-form-content textarea:focus {
+            background-color: rgb(246, 242, 242);
+            outline: none;
+        }
+
+        .join-form-modal {
+            display: none; /* Hidden by default */
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(248, 246, 246); 
+        }
+
+        .join-form-content {
+            background-color: rgba(5, 5, 5, 0.9);
+            margin: 15% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 350px; 
+            border-radius: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .join-form-content h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .join-form-content input,
+        .join-form-content select,
+        .join-form-content textarea {
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .join-form-content input:focus,
+        .join-form-content select:focus,
+        .join-form-content textarea:focus {
+            background-color: rgba(255, 255, 255, 0.8);
+            outline: none;
+        }
+
+        .join-form-content button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .join-form-content button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="volunteer-programs-section">
+        <h2 style="color: white;">Volunteer Programs</h2>
+        <div class="new-program-form">
+            <h3>Create New Program</h3>
+            <input type="text" id="program-title" placeholder="Program Title" required>
+            <textarea id="program-description" placeholder="Program Description" rows="4" required></textarea>
+            <input type="file" id="program-image" placeholder="Image" required>
+            <button id="create-program">Create Program</button>
+        </div>
+
+        <div id="program-list">
+            <h3 style="color: white;">Available Programs</h3>
+            <!-- Programs will be listed here -->
+        </div>
+    </div>
+
+    <div id="joinModal" class="join-form-modal">
+        <div class="join-form-content">
+            <span class="close">&times;</span>
+            <h3>Join Volunteer Program</h3>
+            <input type="text" id="join-name" placeholder="Your Name" required>
+            <input type="number" id="join-age" placeholder="Your Age" required>
+            <select id="join-gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+            <input type="text" id="join-location" placeholder="Your Location" required>
+            <input type="tel" id="join-mobile" placeholder="Mobile No." required>
+            <textarea id="join-thoughts" placeholder="Your Thoughts" rows="4" required></textarea>
+            <button id="submit-join">Join Program</button>
+        </div>
+    </div>
+
+    <script>
+        const programList = document.getElementById('program-list');
+        const joinModal = document.getElementById('joinModal');
+        const closeModal = document.getElementsByClassName('close')[0];
+
+        document.getElementById('create-program').onclick = function() {
+            const title = document.getElementById('program-title').value;
+            const description = document.getElementById('program-description').value;
+            const image = document.getElementById('program-image').value;
+
+            if (title && description && image) {
+                const programDiv = document.createElement('div');
+                programDiv.classList.add('program-item');
+                programDiv.innerHTML = `
+                    <h4>${title}</h4>
+                    <p>${description}</p>
+                    <img src="${image}" alt="${title}" style="width: 100%; border-radius: 8px;">
+                    <button class="join-button">Join Program</button>
+                `;
+                programList.appendChild(programDiv);
+
+                const joinButton = programDiv.querySelector('.join-button');
+                joinButton.onclick = function() {
+                    joinModal.style.display = 'block';
+                };
+
+                document.getElementById('program-title').value = '';
+                document.getElementById('program-description').value = '';
+                document.getElementById('program-image').value = '';
+            } else {
+                alert("Please fill in all fields!");
+            }
+        };
+
+        closeModal.onclick = function() {
+            joinModal.style.display = 'none';
+        };
+
+        window.onclick = function(event) {
+            if (event.target === joinModal) {
+                joinModal.style.display = 'none';
+            }
+        };
+
+        document.getElementById('submit-join').onclick = function() {
+            const name = document.getElementById('join-name').value;
+            const age = document.getElementById('join-age').value;
+            const gender = document.getElementById('join-gender').value;
+            const location = document.getElementById('join-location').value;
+            const mobile = document.getElementById('join-mobile').value;
+            const thoughts = document.getElementById('join-thoughts').value;
+
+            if (name && age && gender && location && mobile && thoughts) {
+                alert(`Thank you for joining, ${name}!`);
+                joinModal.style.display = 'none';
+                // Here you can send the data to your server or email
+
+                // Clear the form fields
+                document.getElementById('join-name').value = '';
+                document.getElementById('join-age').value = '';
+                document.getElementById('join-gender').value = '';
+                document.getElementById('join-location').value = '';
+                document.getElementById('join-mobile').value = '';
+                document.getElementById('join-thoughts').value = '';
+            } else {
+                alert("Please fill in all fields!");
+            }
+        };
+    </script>
+</body>
+</html>
